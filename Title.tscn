@@ -1,0 +1,128 @@
+[gd_scene load_steps=6 format=3 uid="uid://bsibdmr5oynyq"]
+
+[ext_resource type="Script" uid="uid://cwmc682wpsnrc" path="res://title_stuff.gd" id="1_ax32a"]
+[ext_resource type="Theme" uid="uid://d0mn3v7785wuy" path="res://world.tres" id="2_quvj1"]
+[ext_resource type="Texture2D" uid="uid://bgcytduqolp1f" path="res://instructions_1.png" id="3_e4n62"]
+[ext_resource type="Texture2D" uid="uid://ce865s72spd45" path="res://instructions_2.png" id="4_rg4ux"]
+[ext_resource type="AudioStream" uid="uid://dm6k6lsq2axf5" path="res://select.wav" id="5_rg4ux"]
+
+[node name="Title" type="Node2D"]
+script = ExtResource("1_ax32a")
+
+[node name="main" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="main"]
+z_index = 2
+offset_right = 262.0
+offset_bottom = 151.0
+color = Color(0, 0, 0, 1)
+
+[node name="Title" type="Label" parent="main"]
+z_index = 2
+texture_filter = 1
+offset_left = 28.0
+offset_top = 12.0
+offset_right = 252.0
+offset_bottom = 44.0
+theme = ExtResource("2_quvj1")
+theme_override_font_sizes/font_size = 28
+text = "Timebomb"
+
+[node name="play" type="Button" parent="main"]
+z_index = 2
+texture_filter = 1
+offset_left = 91.0
+offset_top = 39.0
+offset_right = 147.0
+offset_bottom = 63.0
+theme = ExtResource("2_quvj1")
+theme_override_colors/font_hover_color = Color(0.787759, 0.787759, 0.787759, 1)
+theme_override_colors/font_outline_color = Color(0.347817, 0.347817, 0.347817, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+text = "play"
+flat = true
+
+[node name="instructions" type="Button" parent="main"]
+z_index = 2
+texture_filter = 1
+offset_left = 40.0
+offset_top = 61.0
+offset_right = 200.0
+offset_bottom = 85.0
+theme = ExtResource("2_quvj1")
+theme_override_colors/font_hover_color = Color(0.787759, 0.787759, 0.787759, 1)
+theme_override_colors/font_outline_color = Color(0.347817, 0.347817, 0.347817, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+text = "instructions"
+flat = true
+
+[node name="instructions" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="instructions"]
+z_index = 2
+offset_right = 262.0
+offset_bottom = 151.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="instructions"]
+z_index = 2
+texture_filter = 1
+offset_left = 12.0
+offset_top = 7.0
+offset_right = 245.0
+offset_bottom = 48.0
+theme = ExtResource("2_quvj1")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 8
+text = "a bomb is about to be dropped on your
+town and everyone has evacuated
+except for you, because you're dog is 
+stuck in glue"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="instructions"]
+z_index = 2
+texture_filter = 1
+offset_left = 16.0
+offset_top = 52.0
+offset_right = 71.0
+offset_bottom = 92.0
+scale = Vector2(2.04618, 2.16086)
+texture = ExtResource("3_e4n62")
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="instructions"]
+z_index = 2
+texture_filter = 1
+offset_left = 157.0
+offset_top = 76.0
+offset_right = 212.0
+offset_bottom = 116.0
+scale = Vector2(1.28916, 1.33589)
+texture = ExtResource("4_rg4ux")
+stretch_mode = 5
+
+[node name="back" type="Button" parent="instructions"]
+z_index = 2
+texture_filter = 1
+offset_left = -47.0
+offset_top = 124.0
+offset_right = 113.0
+offset_bottom = 148.0
+theme = ExtResource("2_quvj1")
+theme_override_colors/font_hover_color = Color(0.787759, 0.787759, 0.787759, 1)
+theme_override_colors/font_outline_color = Color(0.347817, 0.347817, 0.347817, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+text = "back"
+flat = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_rg4ux")
+
+[connection signal="pressed" from="main/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="main/instructions" to="." method="_on_instructions_pressed"]
+[connection signal="pressed" from="instructions/back" to="." method="_on_back_pressed"]

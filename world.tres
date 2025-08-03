@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d0mn3v7785wuy"]
+
+[ext_resource type="FontFile" uid="uid://ddrbep2y6riou" path="res://04B_11__.TTF" id="1_dbpwn"]
+
+[resource]
+default_font = ExtResource("1_dbpwn")
+default_font_size = 16

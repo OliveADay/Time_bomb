@@ -1,0 +1,214 @@
+[gd_scene load_steps=17 format=3 uid="uid://c5dkkq4b22psa"]
+
+[ext_resource type="Script" uid="uid://cfysslwfa3xng" path="res://movement.gd" id="1_kpjcp"]
+[ext_resource type="Texture2D" uid="uid://cs61u8fsxkc0a" path="res://player-Sheet.png" id="2_kpjcp"]
+[ext_resource type="AudioStream" uid="uid://c3udwb38lbmy0" path="res://walk_1.wav" id="3_e80uo"]
+[ext_resource type="AudioStream" uid="uid://dwya4bapojcjn" path="res://walk_2.wav" id="4_cxr5p"]
+[ext_resource type="AudioStream" uid="uid://bkp62ars4g4mu" path="res://climb_1.wav" id="5_tdg3f"]
+[ext_resource type="AudioStream" uid="uid://7jvc2rt6ovu8" path="res://climb_2.wav" id="6_dtqjt"]
+[ext_resource type="AudioStream" uid="uid://chukrlprljwht" path="res://wind.wav" id="7_dtqjt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xhfnw"]
+size = Vector2(8, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kne1u"]
+size = Vector2(8, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kpjcp"]
+size = Vector2(8, 14)
+
+[sub_resource type="Animation" id="Animation_kne1u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("main:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("arm:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_kpjcp"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("main:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_cxr5p"]
+resource_name = "stab"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("main:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [11, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("arm:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_e80uo"]
+resource_name = "walk"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("main:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 6, 0, 7]
+}
+
+[sub_resource type="Animation" id="Animation_tdg3f"]
+resource_name = "walkback"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("main:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 8, 10]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e80uo"]
+_data = {
+&"RESET": SubResource("Animation_kne1u"),
+&"idle": SubResource("Animation_kpjcp"),
+&"stab": SubResource("Animation_cxr5p"),
+&"walk": SubResource("Animation_e80uo"),
+&"walkback": SubResource("Animation_tdg3f")
+}
+
+[node name="Player" type="CharacterBody2D"]
+physics_interpolation_mode = 1
+collision_layer = 33
+platform_on_leave = 2
+platform_floor_layers = 4294967043
+script = ExtResource("1_kpjcp")
+
+[node name="main" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_kpjcp")
+hframes = 4
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_xhfnw")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_bottom = 0
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D"]
+z_index = -1
+offset_left = -412.0
+offset_top = -243.0
+offset_right = 283.0
+offset_bottom = 258.0
+color = Color(1, 0, 0, 1)
+
+[node name="explosionfinder" type="Area2D" parent="Camera2D"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/explosionfinder"]
+position = Vector2(-409, 0)
+shape = SubResource("RectangleShape2D_kne1u")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_kpjcp")
+
+[node name="arm" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(13, 0)
+texture = ExtResource("2_kpjcp")
+hframes = 4
+vframes = 4
+frame = 12
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_e80uo")
+}
+
+[node name="walk_1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_e80uo")
+
+[node name="walk_2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_cxr5p")
+
+[node name="climb_1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_tdg3f")
+volume_db = -10.0
+
+[node name="climb_2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_dtqjt")
+volume_db = -10.0
+
+[node name="wind" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_dtqjt")
+volume_db = -20.612
+autoplay = true
+
+[connection signal="body_entered" from="Camera2D/explosionfinder" to="." method="_on_explosionfinder_body_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -1,0 +1,102 @@
+[gd_scene load_steps=10 format=3 uid="uid://byfl2d2kpkv0r"]
+
+[ext_resource type="Texture2D" uid="uid://chfom32s2kq1l" path="res://evilmcevil-Sheet.png" id="1_nghcp"]
+[ext_resource type="Script" uid="uid://dw241vlbbcvyq" path="res://evil_anim.gd" id="2_0smmf"]
+[ext_resource type="Theme" uid="uid://d0mn3v7785wuy" path="res://world.tres" id="3_nfruc"]
+[ext_resource type="AudioStream" uid="uid://chb3cgqnna1lm" path="res://stab.wav" id="4_0smmf"]
+
+[sub_resource type="Animation" id="Animation_wse8f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ioo17"]
+resource_name = "idle"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_ic0uy"]
+resource_name = "tap"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.3, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 4, 3, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ic0uy"]
+_data = {
+&"RESET": SubResource("Animation_wse8f"),
+&"idle": SubResource("Animation_ioo17"),
+&"tap": SubResource("Animation_ic0uy")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_70uel"]
+size = Vector2(14, 14)
+
+[node name="evilmcevil" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("1_nghcp")
+hframes = 3
+vframes = 2
+script = ExtResource("2_0smmf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ic0uy")
+}
+
+[node name="playerfinder" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="playerfinder"]
+position = Vector2(-8, 9)
+shape = SubResource("RectangleShape2D_70uel")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+z_index = 1
+texture_filter = 1
+offset_left = -35.0
+offset_top = -5.0
+offset_right = 33.0
+offset_bottom = 18.0
+theme = ExtResource("3_nfruc")
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 7
+text = "stab them[e]"
+
+[node name="stab" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_0smmf")
+
+[connection signal="body_entered" from="playerfinder" to="." method="_on_playerfinder_body_entered"]
+[connection signal="body_exited" from="playerfinder" to="." method="_on_playerfinder_body_exited"]
